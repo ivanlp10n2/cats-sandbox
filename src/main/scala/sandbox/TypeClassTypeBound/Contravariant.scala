@@ -57,7 +57,7 @@ object Contravariant extends App {
 
     final case class Failure[A](value: A) extends Sum[A, Nothing]
 
-    // functions are :
+    //functions are :
     //  contravariant in its input parameters
     //  covariant in its output values
     case class Box[+A](value: A) {
