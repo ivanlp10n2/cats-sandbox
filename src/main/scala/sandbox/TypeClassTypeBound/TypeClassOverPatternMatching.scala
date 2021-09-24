@@ -33,6 +33,43 @@ object TypeClassOverPatternMatching extends App{
     assert(talk(Cat("Martina"))== s"My name is Martina miau!")
   }
 
+  { // multiple dispatching not possible
+
+//    case class Cat(name: String)
+//    case class Dog(name: String)
+
+//    def talk(dog: Dog): String =
+//      s"My name is ${dog.name} guau!"
+
+//    def talk(cat: Cat): String =
+//      s"My name is ${cat.name} miau!"
+
+//    assert(talk(Dog("Julio"))  == s"My name is Julio guau!")
+//    assert(talk(Cat("Martina"))== s"My name is Martina miau!")
+  }
+
+
+  { // dynamic dispatching (using type parameters)
+    abstract class Animal(){
+      val name: String
+      def talk: String
+    }
+
+    case class Cat(name: String) extends Animal {
+      override def talk: String = s"My name is $name miau!"
+    }
+    case class Dog(name: String) extends Animal {
+      override def talk: String = s"My name is $name guau!"
+    }
+
+    def talk[T <: Animal](animal : T): String =
+      animal.talk
+
+    assert(talk(Dog("Julio"))  == s"My name is Julio guau!")
+    assert(talk(Cat("Martina"))== s"My name is Martina miau!")
+  }
+
+
   { // define only its relationship and implement on function
     sealed trait Animal
     case class Cat(name: String) extends Animal
