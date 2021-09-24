@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
   "eu.timepit" %% "refined-scopt"           % "0.9.27", // optional
   "eu.timepit" %% "refined-shapeless"       % "0.9.27"  // optional
 )
+libraryDependencies += "org.typelevel" %% "cats-effect" % "3.2.0"
 
 // scalac options come from the sbt-tpolecat plugin so need to set any here
 
