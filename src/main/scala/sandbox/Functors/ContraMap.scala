@@ -37,8 +37,7 @@ object ContraMap extends App {
     format(true)
     // res3: String = "yes"
 
-    implicit def boxPrintable[A](implicit ev: Printable[A])
-    : Printable[Box[A]] =
+    implicit def boxPrintable[A](implicit ev: Printable[A]): Printable[Box[A]] =
       ev.contramap[Box[A]](a => a.value)
 
 

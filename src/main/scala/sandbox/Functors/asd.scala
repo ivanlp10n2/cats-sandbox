@@ -1,13 +1,11 @@
 package sandbox.Functors
 
-import scala.concurrent.ExecutionContext
-
 object asd extends App {
 
   import cats.Functor
 
-  def lenOption: Option[String] => Option[Int] =
-    Functor[Option].lift(_.length)
+  val lenOption: Option[String] => Option[Int] = x =>
+    Functor[Option].lift((s: String) => s.length)(x)
 
   val lensOption: Option[String] => Option[Int] =
     s => s match {
@@ -19,9 +17,12 @@ object asd extends App {
   assert(lenOption(something) == lensOption(something))
   assert(lenOption(None) == lensOption(None))
 
-  import scala.concurrent.Future
+  val animals = List("Cats", "are", "awesome")
 
-  val a : Either[String] => Future[Int] =
-    Functor[Future].lift(_.lenght)
+  
+//  def len[A,B] : Functor[] = {
+//    Functor[]
+//      .lift[A, B](A => a => animals)
+//  }
 
 }
