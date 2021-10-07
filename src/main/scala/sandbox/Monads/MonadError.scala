@@ -31,13 +31,13 @@ object MonadErrorApp extends App{
 }
 object Excercise extends App{
   import cats.MonadError
-  import cats.syntax.applicativeError._
-  import cats.syntax.applicative._
+//  import cats.syntax.applicativeError._
+//  import cats.syntax.applicative._
   def validateAdult[F[_]](age: Int)(implicit me: MonadError[F, Throwable]): F[Int]=
-    if (age >= 18) age.pure[F]
-    else (new IllegalArgumentException("not adult")).raiseError[F, Int]
-//    me.ensure(me.pure(age))(new IllegalArgumentException("not adult"))(age => age >= 18)
+    me.ensure(me.pure(age))(new IllegalArgumentException("not adult"))(age => age >= 18)
 
+//    if (age >= 18) age.pure[F]
+//    else (new IllegalArgumentException("not adult")).raiseError[F, Int]
   import scala.util.Try
   println(validateAdult[Try](18))
   println(validateAdult[Try](8))
