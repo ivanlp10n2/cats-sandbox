@@ -54,4 +54,15 @@ object SemigroupalApp extends App{
 
   println((err1, err2).parMapN(addTwo))
 
+  import cats.Foldable
+  import cats.Eval
+  import cats.Monoid
+  val bigdata = (0 to 10000).to(List)
+  bigdata.foldRight(0L)(_ + _)
+  def folding(lazyList: LazyList[Int])(implicit M: Monoid[Int]): Eval[Int] =
+    Foldable[LazyList].foldRight(lazyList, Eval.now(M.empty))( (a,b) =>
+      Eval.defer( b.map(_ + a) )
+    )
+
+  Foldable[List].foldMap(bigdata)(a => a + 3)
 }
