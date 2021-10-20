@@ -8,9 +8,4 @@ object HelloWorldApp extends IOApp{
 
   def helloWorld: IO[Unit] = IO(println("que onda"))
 
-  def tickingClock: IO[Unit] =
-    for {
-      time <- MyIO.time
-    }
-  
 }
