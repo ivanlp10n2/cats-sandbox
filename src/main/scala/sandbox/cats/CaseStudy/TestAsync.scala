@@ -2,11 +2,12 @@ package sandbox.cats.CaseStudy
 
 //import cats.{Applicative, Id}
 
-import scala.concurrent._
-import scala.concurrent.ExecutionContext.Implicits.global
 import cats.syntax.traverse._
 
-object TestAsync extends App {
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent._
+
+object TestAsync {
 
   /**
   Effect =>
@@ -68,10 +69,10 @@ object TestAsync extends App {
 
 
 
-  def sum(x:Int, y:Int): Option[Int] = ???
-  def sendEmail(n: Int): Option[String] = ???
+//  def sum(x:Int, y:Int): Option[Int] = ???
+//  def sendEmail(n: Int): Option[String] = ???
 
-  sum(3,4).flatMap(n => sendEmail(n))
+//  sum(3,4).flatMap(n => sendEmail(n))
 
   trait UpTimeClient {
     def getUptime(client: String): Future[Int]
@@ -160,4 +161,21 @@ object TestAsync extends App {
   def foo(a: Int): Int =
     a + a
   */
+
+  import cats.effect.IO
+//  import scala.concurrent.duration._
+//  import cats.effect.syntax._
+  import cats.effect._
+//  import cats.effect.implicits._
+//  import cats.effect.std.Semaphore
+  def someExpensiveTask: IO[Int] =
+    IO(println("asd")) *> IO(3)
+//    IO.sleep(1.second) >> someExpensiveTask
+//  import cats.effect.unsafe.implicits.global
+//  someExpensiveTask.unsafeRunSync()
+
+//  override def run(args: List[String]): IO[ExitCode] =
+//    IO.pure(3).as(ExitCode.Success)
+//  private def either: Either[String, Int] = Right(3)
+
 }
