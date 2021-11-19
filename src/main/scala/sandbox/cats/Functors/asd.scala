@@ -1,5 +1,6 @@
 package sandbox.cats.Functors
 
+
 object asd extends App {
 
   import cats.Functor
@@ -24,5 +25,26 @@ object asd extends App {
 //    Functor[]
 //      .lift[A, B](A => a => animals)
 //  }
+
+//  F[_] => A => F[A]
+//  List => Int => List[Int]
+//
+//  Option(3) ?? Some(3) || None
+//  F => Int => F[Int]
+//  Option(3)  map (a: Int => f(a))
+//  (F => Int) map (a :Int => f(a))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
