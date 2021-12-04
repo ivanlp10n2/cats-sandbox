@@ -45,7 +45,7 @@ object ApplicativErrorApp {
 //    def processPayment[F[_]: AppError](payment:Payment): F[PaymentId] = ???
 
     type Request[F[_]] = F[Any]
-    type Response[F[_]] = F[Any]
+    case class Response[F[_]]()
 
     import cats.data.OptionT
     case class AuthedRequest[F[_], User](user: User, request: Request[F])
@@ -64,6 +64,11 @@ object ApplicativErrorApp {
 
     type Middleware[F[_]] = Kleisli[F, Request[F], Response[F]] => Kleisli[F, Request[F], Response[F]]
     type FooFighter[F[_]] = Request[F] => F[Response[F]] => Request[F] => F[Response[F]]
-  }
 
+    def foo: HttpRoutes[IO] = ???
+
+    def applicative[A[_]: Applicative, S, T]: A[S => T] => A[S] => A[T] = Applicative[A].ap
+    cats.Alternative
+
+  }
 }

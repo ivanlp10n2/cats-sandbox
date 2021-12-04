@@ -1,6 +1,7 @@
 package sandbox.typetetris
 
 import cats.effect._
+//import eu.timepit.refined.boolean.Xor
 
 object TTTraining extends IOApp {
   override def run(args: List[String]): IO[ExitCode] =
@@ -33,6 +34,9 @@ object TTTraining extends IOApp {
   def process(request: Request.Authorized): Future[Response.Authorized] = ???
 
   def authorize(request: Request.Unauthorized): Option[Request.Authorized] = ???
+
+//  import cats.syntax.all._
+//  Right(3).ensure
 
 
 }
