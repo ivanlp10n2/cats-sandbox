@@ -7,6 +7,7 @@ object Contravariant extends App{
   val showSymbol: Show[Symbol] = cats.Contravariant[Show]
     .contramap[String, Symbol](showString)(s => s"Symbol name: ${s.name}")
 
+  import cats._
   println(showString.show("que onda"))
   println(showSymbol.show(Symbol("tuvieja")))
 

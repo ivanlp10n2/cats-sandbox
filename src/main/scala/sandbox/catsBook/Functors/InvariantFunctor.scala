@@ -18,20 +18,20 @@ object InvariantFunctor extends App{
   def decode[A](value: String)(implicit c: Codec[A]): A =
     c.decode(value)
 
-  implicit val codecString: Codec[String]= new Codec[String]{
+  implicit val stringCodec: Codec[String]= new Codec[String]{
     override def decode(value: String): String = value
 
     override def encode(value: String): String = value
   }
 
   implicit val intCodec: Codec[Int] =
-    codecString.imap[Int](_.toInt, _.toString)
+    stringCodec.imap[Int](_.toInt, _.toString)
 
   implicit val booleanCodec: Codec[Boolean] =
-    codecString.imap[Boolean](_.toBoolean, _.toString)
+    stringCodec.imap[Boolean](_.toBoolean, _.toString)
 
   implicit val doubleCodec: Codec[Double] =
-    codecString.imap[Double](_.toDouble, _.toString)
+    stringCodec.imap[Double](_.toDouble, _.toString)
 
   final case class Box[A](value: A)
   implicit def boxCodec[A](implicit C: Codec[A]): Codec[Box[A]] =
@@ -47,4 +47,32 @@ object InvariantFunctor extends App{
   // res13: String = "123.4"
   assert( decode[Box[Double]]("123.4") == Box(123.4))
   // res14: Box[Double] = Box(123.4)
+
+  type Id[A] = A
+  import cats.syntax.all._
+  import cats._
+//  List(1,2,3).traverse(identity)
+
+//  identity[List, Int, String]
+
+//  def identity[F[_]: Applicative, A, B]: A => F[B] = {
+//    a => a.pure[F]
+//  }
+
+  def listTraverse[F[_]: Applicative, A, B]
+      (list: List[A])(func: A => F[B]): F[List[B]] =
+    list.foldLeft(List.empty[B].pure[F]) { (accum, item) =>
+      (accum, func(item)).mapN(_ :+ _)
+  }
+
+  def listSequence[F[_]: Applicative, B]
+        (list: List[F[B]]): F[List[B]] =
+    listTraverse(list)(identity)
+
+//    F[A] => (A => G[B]) => G[F[B]]
+    // F[G[B]] => (B => B) => G[F[B]] // == sequence
+    import cats.instances.all._
+    def foo[F[_]: Applicative,A,B]: Option[List[Int]] =
+      List[Option[Int]](Some(1),Some(2),Some(3))
+        .traverse(identity)
 }
