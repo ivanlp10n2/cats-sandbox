@@ -32,6 +32,9 @@ libraryDependencies ++= Seq(
 ).map(_ % circeVersion)
 // scalac options come from the sbt-tpolecat plugin so need to set any here
 
-addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full)
+libraryDependencies += "org.scalameta" %% "munit" % "0.7.29"
+testFrameworks += new TestFramework("munit.Framework")
+
+addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.13.2" cross CrossVersion.full)
 addCompilerPlugin("org.augustjune" %% "context-applied" % "0.1.4")
 scalacOptions ++= Seq("-Ymacro-annotations")
