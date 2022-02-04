@@ -130,26 +130,33 @@ object Either extends App {
   }
 
   object withMonads{ // Continuation passing style is represented by monads
-    import cats.Monad
+    import cats.MonadThrow
+    import cats.effect.IO
 
-    def divide[F[_]: Monad](dividend: Int, divisor: Int, dividedByZero: Int => F[Int]): F[Int] =
+    def divide[F[_]: MonadThrow](dividend: Int, divisor: Int, dividedByZero: Int => F[Int]): F[Int] =
       if (divisor == 0) dividedByZero(divisor)
       else (dividend / divisor).pure[F]
 
-    def log10[F[_]: Monad](number: Double, noLogarithm: Double => F[Double]): F[Double] =
+    def log10[F[_]: MonadThrow](number: Double, noLogarithm: Double => F[Double]): F[Double] =
       if (number <= 0) noLogarithm(number)
       else Math.log10(number).pure[F]
 
-    def divideAndLog10[F[_]: Monad, A](dividend: Int, divisor: Int, divideByZero: Int => F[*], noLogarithm: Double => F[A]): F[A]=
+    def divideAndLog10[F[_]: MonadThrow](dividend: Int,
+                                       divisor: Int,
+                                       divideByZero: Int => F[Int],
+                                       noLogarithm: Double => F[Double]
+                                      ): F[Double]=
       for{
         divideResult <- divide[F](dividend, divisor, divideByZero)
         logResult <- log10[F](divideResult.toDouble, noLogarithm)
       } yield logResult
 
-    divideAndLog10(5, 5,
-      dividedByZero = _ => println("dividiste x 0 bigote"),
-      noLogarithm = _ => println("value = 0 non logarithm"),
-      result = n => println(s"Result $n"))
+    divideAndLog10[IO](5, 5,
+      divideByZero = {_ => IO.raiseError(new RuntimeException("dividiste x 0 bigote"))},
+      noLogarithm = {_ => IO.raiseError(new RuntimeException("0 non logarithm"))}
+    )
+
+
   }
 
   withFunctions
