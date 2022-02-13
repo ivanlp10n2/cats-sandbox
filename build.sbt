@@ -3,7 +3,7 @@ version := "0.0.1-SNAPSHOT"
 
 scalaVersion := "2.13.1"
 
-libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.7.0"
 libraryDependencies += "io.estatico" %% "newtype" % "0.4.4"
 libraryDependencies ++= Seq(
   "eu.timepit" %% "refined"                 % "0.9.27",
@@ -18,12 +18,14 @@ libraryDependencies ++= Seq(
   "eu.timepit" %% "refined-shapeless"       % "0.9.27"  // optional
 )
 val http4sVersion = "0.23.1"
-libraryDependencies += "org.typelevel" %% "cats-effect" % "3.2.0"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "3.2.9"
 libraryDependencies += "org.http4s" %% "http4s-dsl" % http4sVersion
 libraryDependencies += "org.http4s" %% "http4s-ember-client" % http4sVersion
 libraryDependencies += "org.http4s" %% "http4s-ember-server" % http4sVersion
 //libraryDependencies += "org.http4s" %% "http4s" % http4sVersion
 val circeVersion = "0.14.1"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.10"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
