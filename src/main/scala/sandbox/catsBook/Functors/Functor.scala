@@ -43,8 +43,11 @@ object FunctorApp extends App {
   }
 */
   {
-  sealed trait Tree[+A]
+    // Sum type y Product type son ADT: Algebraic data types
+    // Abstract ADT
+  sealed trait Tree[+A] // Branch OR Leaf
   case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
+  // left AND right
 
   case class Leaf[A](value: A) extends Tree[A]
 
